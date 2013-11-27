@@ -7,7 +7,8 @@ __author__ = 'pheodor'
 
 class CommonUtils():
 
-    def _polyn(self, P, d):
+    @staticmethod
+    def _polyn(P, d):
         """ Для всех базисных функций многомерного полинома кроме нулевой
             рассчитывает индексы родительской функции и элемента вектора состояния,
             на который её нужно домножить. Обходит все функции с помощью дерева.
@@ -33,27 +34,29 @@ class CommonUtils():
         # Превращаем списки в массивы и возвращаем:
         return require(coel), require(coej)
 
-    def fit_self(self, radX, rate):
+    @staticmethod
+    def fit_self(radX, rate):
         N = len(radX)
         v = empty((N-2, 2))
         v[:, 0] = radX[1:-1]
         v[:, 1] = radX[:-2]
         # Выясним номера и коэффициенты для полинома
-        (c1, c2) = self._polyn(rate, v.shape[1])
+        (c1, c2) = CommonUtils._polyn(rate, v.shape[1])
         f = empty((N-2, len(c1)+1))
         f[:, 0] = 1
         for i in xrange(len(c1)):
             f[:, i+1] = f[:, c1[i]]*v[:, c2[i]]
         return linalg.lstsq(f, radX[2:])
 
-    def fit_join(self, radX, radY, rate):
+    @staticmethod
+    def fit_join(radX, radY, rate):
         N = len(radX)
         v = empty((N-2, 3))
         v[:, 0] = radX[1:-1]
         v[:, 1] = radX[:-2]
         v[:, 2] = radY[1:-1]
         # Выясним номера и коэффициенты для полинома
-        (c1, c2) = self._polyn(rate, v.shape[1])
+        (c1, c2) = CommonUtils._polyn(rate, v.shape[1])
         f = empty((N-2, len(c1)+1))
         f[:, 0] = 1
         for i in xrange(len(c1)):
