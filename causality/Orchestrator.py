@@ -10,15 +10,15 @@ __author__ = 'pheodor'
 
 class Orchestrator():
 
-    def __init__(self, parameter, nSigma, nK):
+    def __init__(self, defaultsKoeff, nSigma, nK):
+        self.koeffArray = defaultsKoeff
         self.generator = CmCmGenerator(10000, 0.1, 0.15, self.koeffArray)
-        self.koeffArray = [parameter, 2.13, 0.1, 3.77]
         self.nSigma = nSigma
         self.nk = nK
         self.dk = self.dSigma = 0.01
-        self.pathToFolder = "./Data/Cm-to-Cm_" + self.koeffArray[2] + "_" + self.koeffArray[3] + "_II/"+"%4.2f" % self.koeffArray[0]
+        self.pathToFolder = "./Data/Cm-to-Cm_" + self.koeffArray[1] + "_" + self.koeffArray[2] + "_II/"
 
-    def pi_from_sigma_k(self):
+    def pi_from_sigma_k(self, parameter):
         # Создадим массив коэффициентов
         mPI_s_k = mEself_s_k = mEjoin_s_k = empty((self.nk, self.nSigma))
         # Создаём папку
