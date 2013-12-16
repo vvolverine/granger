@@ -1,7 +1,7 @@
 from multiprocessing import Pool, cpu_count
 import argparse
 from numpy import arange
-from causality.CmCmGenerator import CmCmGenerator
+from causality.Orchestrator import Orchestrator
 
 __author__ = 'pheodor'
 
@@ -15,6 +15,6 @@ if __name__ == '__main__':
     parser.add_argument("--starts", help='set initial value of X and Y time ranges', nargs='*', type=float)
     parser.add_argument("--weights", help='define default value in coefficient array', nargs='*', type=float)
     args = parser.parse_args()
+    orchestrator = Orchestrator(args.weights, args.starts, args.length, args.nK, args.nSigma, args.d, args.folder)
     pool = Pool(processes=cpu_count())
-    pool.map(pi_from_sigma_k, arange(0.1, 0.3, 0.05))
-    generator = CmCmGenerator(10000, 0.1, 0.15, )
+    pool.map(orchestrator.pi_from_sigma_k, arange(0.1, 0.3, 0.05))

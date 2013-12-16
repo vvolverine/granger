@@ -4,11 +4,11 @@ __author__ = 'pheodor'
 
 
 class CmCmGenerator():
-    def __init__(self, N, x0, y0, coefficients, nTrans=1000):
+    def __init__(self, N, x0, y0, nTrans=1000):
         self.N = N
         self.x0 = x0
         self.y0 = y0
-        self.coefficients = coefficients
+        self.coefficients = []
         self.nTrans = nTrans
 
     def generate(self, kappa):
